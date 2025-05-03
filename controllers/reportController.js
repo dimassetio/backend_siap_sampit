@@ -67,6 +67,10 @@ const getReportById = async (req, res) => {
     const report = await Report.findById(req.params.id)
       .populate('userId validatedBy handledBy')
       .populate({
+        path: 'statusHistory.updatedBy',
+        select: 'name email phone role'
+      })
+      .populate({
         path: 'replies.senderId', // Populate sender details for replies
         select: 'name email phone role' // Select the fields you want to return for the sender (you can adjust based on your needs)
       });;
